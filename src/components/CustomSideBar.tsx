@@ -12,7 +12,7 @@ import { DrawerContentComponentProps } from '@react-navigation/drawer'
 import AnimatedColorBox from './AnimatedColorBox'
 import ThemeToggle from './ThemeToggle'
 import { Feather } from '@expo/vector-icons'
-import SideBarScreenToggle from './SideBarScreenToggle'
+import SideBarMenuNavigation from './SideBarMenuNavigation'
 
 const CustomSidebar = (props: DrawerContentComponentProps) => {
     const { state, navigation } = props
@@ -26,6 +26,9 @@ const CustomSidebar = (props: DrawerContentComponentProps) => {
     }, [navigation])
     const handlePressMenuFarm = useCallback(() => {
         navigation.navigate('Farm')
+    }, [navigation])
+    const handlePressMenuList = useCallback(() => {
+        navigation.navigate('List')
     }, [navigation])
 
     return (
@@ -61,20 +64,27 @@ const CustomSidebar = (props: DrawerContentComponentProps) => {
                 <Heading mb={4} size="xl">
                     Ko-Kwan Mongkholtham
                 </Heading>
-                <SideBarScreenToggle
+                <SideBarMenuNavigation
                     active={currentRoute === 'Home'}
                     onPress={handlePressMenuHome}
                     icon="home"
                 >
                     Home
-                </SideBarScreenToggle>
-                <SideBarScreenToggle
+                </SideBarMenuNavigation>
+                <SideBarMenuNavigation
+                    active={currentRoute === 'List'}
+                    onPress={handlePressMenuList}
+                    icon="info"
+                >
+                    List
+                </SideBarMenuNavigation>
+                <SideBarMenuNavigation
                     active={currentRoute === 'Farm'}
                     onPress={handlePressMenuFarm}
                     icon="feather"
                 >
                     Farm
-                </SideBarScreenToggle>
+                </SideBarMenuNavigation>
             </VStack>
             <Center>
                 <ThemeToggle />

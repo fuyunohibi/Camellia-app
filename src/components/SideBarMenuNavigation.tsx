@@ -8,7 +8,7 @@ interface Props extends IButtonProps {
     children: React.ReactNode
 }
 
-const SideBarScreenToggle = ({ active, icon, children, ...props }: Props) => {
+const SideBarMenuNavigation = ({ active, icon, children, ...props }: Props) => {
     return (
         <Button
             size="lg"
@@ -41,4 +41,4 @@ const SideBarScreenToggle = ({ active, icon, children, ...props }: Props) => {
     )
 }
 
-export default SideBarScreenToggle
+export default SideBarMenuNavigation

@@ -1,15 +1,15 @@
-import React, { useCallback, useState } from 'react'
-import { Icon, VStack, useColorModeValue, Fab } from 'native-base'
-import { AntDesign } from '@expo/vector-icons'
+import React, { useEffect, useRef, useCallback, PureComponent, useMemo } from 'react'
+import { VStack, useColorModeValue } from 'native-base'
+import { Dimensions, FlatList, StyleSheet, Text, ToastAndroid, TouchableOpacity, View, ScrollView } from 'react-native';
 import AnimatedColorBox from '../components/AnimatedColorBox'
 import MastHead from '../components/MastHead'
 import NavBar from '../components/NavBar'
-import { Text, ScrollView } from 'react-native'
 import SearchBar from '../components/SearchBar'
+import ListItem from '../components/ListItem';
 
 
 export default function HomeScreen() {
-    
+
     return (
         <AnimatedColorBox
             flex={1}
@@ -29,14 +29,13 @@ export default function HomeScreen() {
                 bg={useColorModeValue('warmGray.50', 'primary.900')}
                 mt="-50px"
                 borderTopLeftRadius="20px"
-                borderTopRightRadius="20pxr"
+                borderTopRightRadius="20px"
                 pt="20px"
                 position={'relative'}
             >
-                <ScrollView>
-                    <Text style={{ fontSize: 20, paddingTop: 30, marginLeft: 30 }}>Home</Text>
-                </ScrollView>
+                <ListItem />
             </VStack>
         </AnimatedColorBox>
-    )
+    );
 }
+

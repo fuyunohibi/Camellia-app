@@ -18,7 +18,7 @@ const SearchBar = () => {
             px={4}
             py={3}
             shadow={2}
-            width={360}
+            width={376}
             height={55}
             zIndex={1}
             position='absolute'

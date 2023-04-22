@@ -24,7 +24,7 @@ const MastHead = ({ title ,image , children }: Props) => {
             />
             {children}
             <Box flex={1}/>
-            <Heading color="white" marginLeft={28} marginBottom={20} size="xl">
+            <Heading color="white" marginLeft={27} marginBottom={20} size="xl">
                 {title}
             </Heading>
         </VStack>
