@@ -4,7 +4,7 @@ import Colors from '../constants/Colors';
 const Styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: 10,
+        marginTop: -20,
     },
     rowView: {
         flexDirection: 'row',

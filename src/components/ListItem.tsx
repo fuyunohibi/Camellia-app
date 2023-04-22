@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useCallback, PureComponent, useMemo, useState } from 'react';
-import { Dimensions, FlatList, StyleSheet, Text, ToastAndroid, TouchableOpacity, View, Button } from 'react-native';
+import React, { useEffect, useRef, useCallback, useMemo, useState } from 'react';
+import { Dimensions, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import PropTypes from 'prop-types';
 import { Animations } from '../constants/Animations';
@@ -18,56 +18,40 @@ const colorAr = [
     '#8f06e4',
     'skyblue',
     '#ff4c98',
-]
+];
 
-class ListItem extends PureComponent {
-    static propTypes = {
-        item: PropTypes.object.isRequired,
-        index: PropTypes.number.isRequired,
-        animation: PropTypes.oneOf(Object.keys(Animations)).isRequired,
-        navigation: PropTypes.object.isRequired,
-        bgColor: PropTypes.func.isRequired,
-    };
+const ListItem = ({ item, index, animation, navigation, bgColor }) => (
+    <Animatable.View animation={animation} duration={1000} delay={index * 100}>
+        <View style={styles.listItem}>
+            <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('Screen')}>
+                <View style={[styles.image, { backgroundColor: bgColor }]} />
+            </TouchableOpacity>
+            <View style={styles.detailsContainer}>
+                <Text style={styles.name}>{item.name}</Text>
+            </View>
+        </View>
+    </Animatable.View>
+);
 
-    render() {
-        const { item, index, animation, navigation, bgColor } = this.props;
+ListItem.propTypes = {
+    item: PropTypes.object.isRequired,
+    index: PropTypes.number.isRequired,
+    animation: PropTypes.oneOf(Object.keys(Animations)).isRequired,
+    navigation: PropTypes.object.isRequired,
+    bgColor: PropTypes.func.isRequired,
+};
 
-        return (
-            <Animatable.View animation={animation} duration={1000} delay={index * 100}>
-                <View style={styles.listItem}>
-                    <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('Screen')}>
-                        <View style={[styles.image, { backgroundColor: bgColor }]} />
-                    </TouchableOpacity>
-                    <View style={styles.detailsContainer}>
-                        <Text style={styles.name}>{item.name}</Text>
-                    </View>
-                </View>
-            </Animatable.View>
-        );
-    }
-}
 
 export default function ListItems({ navigation }) {
-    const [items, setItems] = useState([
-        { id: 1, name: 'Item 1' },
-        { id: 2, name: 'Item 2' },
-    ]);
-
-
-    const onAddListItem = (id) => {
-        setItems(
-            (prevItems) => [...prevItems, { id, name: `Item ${id}` }]
-        );
-    }
-
     const viewRef = useRef(null);
     const animation = Animations[1];
     const bgColorRef = useRef(colorAr);
-    const data = items;
 
     const bgColor = useMemo(() => {
         return (index) => bgColorRef.current[index % colorAr.length];
     }, [bgColorRef]);
+
+    const [itemCount, setItemCount] = useState(1);
 
     const renderItem = useCallback(({ item, index }) => (
         <ListItem item={item} index={index} animation={animation} navigation={navigation} bgColor={bgColor(index)} />
@@ -100,15 +84,24 @@ export default function ListItems({ navigation }) {
         return () => unsubscribe;
     }, [navigation])
 
+    const data = Array.from({ length: itemCount }, (_, i) => i);
+
     return (
         <View style={[Styles.container]}>
             <Animatable.View
                 ref={viewRef}
                 easing={'ease-in-out'}
-                duration={500}
+                duration={50}
                 style={Styles.container}>
 
-                <FloatingActionButton onAddListItem={onAddListItem} />
+                <View style={styles.viewContainer}>
+                    <TouchableOpacity 
+                        style={styles.button} 
+                        onPress={() => setItemCount(itemCount + 1)}
+                    >
+                        <Feather name="plus" size={24} color="white" />
+                    </TouchableOpacity>
+                </View>
 
                 <FlatList
                     data={data}
@@ -123,9 +116,6 @@ export default function ListItems({ navigation }) {
         </View>
     );
 }
-
-
-
 
 const styles = StyleSheet.create({
     name: {
@@ -169,15 +159,19 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
     },
+    viewContainer: { 
+        justifyContent: 'flex-end', 
+        alignItems: 'flex-end', 
+        bottom: - (Dimensions.get('window').height - 330),
+        right: Dimensions.get('window').width / 2 - 188,
+        zIndex: 1,
+    },
     button: {
         backgroundColor: Colors.primary,
-        padding: 10,
-        borderRadius: 5,
-        margin: 10,
-    },
-    buttonText: {
-        color: 'white',
-        fontSize: 16,
-        fontWeight: 'bold',
+        borderRadius: 50,
+        height: 70,
+        width: 70,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 });
