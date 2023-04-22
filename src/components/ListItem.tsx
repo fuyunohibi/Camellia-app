@@ -1,11 +1,12 @@
-import React, { useEffect, useRef, useCallback, PureComponent, useMemo  } from 'react';
-import { Dimensions, FlatList, StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useRef, useCallback, PureComponent, useMemo, useState } from 'react';
+import { Dimensions, FlatList, StyleSheet, Text, ToastAndroid, TouchableOpacity, View, Button } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import PropTypes from 'prop-types';
 import { Animations } from '../constants/Animations';
-import Colors from '../constants/Colors'; 
+import Colors from '../constants/Colors';
 import Styles from '../common/Styles';
 import { Feather } from '@expo/vector-icons';
+import FloatingActionButton from './AddListButton';
 
 const colorAr = [
     '#637aff',
@@ -47,14 +48,26 @@ class ListItem extends PureComponent {
 }
 
 export default function ListItems({ navigation }) {
+    const [items, setItems] = useState([
+        { id: 1, name: 'Item 1' },
+        { id: 2, name: 'Item 2' },
+    ]);
+
+
+    const onAddListItem = (id) => {
+        setItems(
+            (prevItems) => [...prevItems, { id, name: `Item ${id}` }]
+        );
+    }
+
     const viewRef = useRef(null);
     const animation = Animations[1];
     const bgColorRef = useRef(colorAr);
+    const data = items;
 
     const bgColor = useMemo(() => {
         return (index) => bgColorRef.current[index % colorAr.length];
     }, [bgColorRef]);
-
 
     const renderItem = useCallback(({ item, index }) => (
         <ListItem item={item} index={index} animation={animation} navigation={navigation} bgColor={bgColor(index)} />
@@ -87,8 +100,6 @@ export default function ListItems({ navigation }) {
         return () => unsubscribe;
     }, [navigation])
 
-    const data = Array.from({ length: 15 }, (_, i) => i);
-
     return (
         <View style={[Styles.container]}>
             <Animatable.View
@@ -96,6 +107,9 @@ export default function ListItems({ navigation }) {
                 easing={'ease-in-out'}
                 duration={500}
                 style={Styles.container}>
+
+                <FloatingActionButton onAddListItem={onAddListItem} />
+
                 <FlatList
                     data={data}
                     keyExtractor={(_, i) => String(i)}
@@ -109,6 +123,9 @@ export default function ListItems({ navigation }) {
         </View>
     );
 }
+
+
+
 
 const styles = StyleSheet.create({
     name: {
@@ -152,6 +169,15 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
     },
+    button: {
+        backgroundColor: Colors.primary,
+        padding: 10,
+        borderRadius: 5,
+        margin: 10,
+    },
+    buttonText: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
 });
-
-
