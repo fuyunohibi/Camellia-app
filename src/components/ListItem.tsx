@@ -91,7 +91,7 @@ export default function ListItems({ navigation }) {
             <Animatable.View
                 ref={viewRef}
                 easing={'ease-in-out'}
-                duration={50}
+                duration={10}
                 style={Styles.container}>
 
                 <View style={styles.viewContainer}>
