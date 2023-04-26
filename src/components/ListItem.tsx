@@ -6,7 +6,7 @@ import { Animations } from '../constants/Animations';
 import Colors from '../constants/Colors';
 import Styles from '../common/Styles';
 import { Feather } from '@expo/vector-icons';
-import FloatingActionButton from './AddListButton';
+
 
 const colorAr = [
     '#637aff',
@@ -36,9 +36,9 @@ const ListItem = ({ item, index, animation, navigation, bgColor }) => (
 ListItem.propTypes = {
     item: PropTypes.object.isRequired,
     index: PropTypes.number.isRequired,
-    animation: PropTypes.oneOf(Object.keys(Animations)).isRequired,
+    animation: PropTypes.oneOf(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "fadeInUp"]).isRequired,
     navigation: PropTypes.object.isRequired,
-    bgColor: PropTypes.func.isRequired,
+    bgColor: PropTypes.string.isRequired,
 };
 
 
@@ -53,9 +53,13 @@ export default function ListItems({ navigation }) {
 
     const [itemCount, setItemCount] = useState(1);
 
-    const renderItem = useCallback(({ item, index }) => (
-        <ListItem item={item} index={index} animation={animation} navigation={navigation} bgColor={bgColor(index)} />
-    ), [animation, bgColor, navigation])
+    const renderItem = useCallback(({ item, index }) => {
+        if (navigation) {
+            return <ListItem item={item} index={index} animation={animation} navigation={navigation} bgColor={bgColor(index)} />;
+        }
+        return null;
+    }, [animation, bgColor, navigation]);
+
 
     const ListEmptyComponent = () => {
         const anim = {
@@ -95,8 +99,8 @@ export default function ListItems({ navigation }) {
                 style={Styles.container}>
 
                 <View style={styles.viewContainer}>
-                    <TouchableOpacity 
-                        style={styles.button} 
+                    <TouchableOpacity
+                        style={styles.button}
                         onPress={() => setItemCount(itemCount + 1)}
                     >
                         <Feather name="plus" size={24} color="white" />
@@ -159,9 +163,9 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
     },
-    viewContainer: { 
-        justifyContent: 'flex-end', 
-        alignItems: 'flex-end', 
+    viewContainer: {
+        justifyContent: 'flex-end',
+        alignItems: 'flex-end',
         bottom: - (Dimensions.get('window').height - 330),
         right: Dimensions.get('window').width / 2 - 188,
         zIndex: 1,
