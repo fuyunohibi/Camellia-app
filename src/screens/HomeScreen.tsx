@@ -1,6 +1,5 @@
-import React, { useEffect, useRef, useCallback, PureComponent, useMemo } from 'react'
+import React from 'react'
 import { VStack, useColorModeValue } from 'native-base'
-import { Dimensions, FlatList, StyleSheet, Text, ToastAndroid, TouchableOpacity, View, ScrollView } from 'react-native';
 import AnimatedColorBox from '../components/AnimatedColorBox'
 import MastHead from '../components/MastHead'
 import NavBar from '../components/NavBar'
@@ -9,6 +8,7 @@ import ListItem from '../components/ListItem';
 
 
 export default function HomeScreen() {
+
 
     return (
         <AnimatedColorBox

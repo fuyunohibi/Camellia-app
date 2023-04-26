@@ -27,7 +27,7 @@ class ListItem extends PureComponent {
         return (
             <Animatable.View animation={animation} duration={1000} delay={index * 100}>
                 <View style={styles.listItem}>
-                    <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('Screen')}>
+                    <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('Search')}>
                         <View style={[styles.image, { backgroundColor: bgColor }]} />
                     </TouchableOpacity>
                     <View style={styles.detailsContainer}>

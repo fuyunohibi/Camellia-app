@@ -5,6 +5,7 @@ import HomeScreen from './screens/HomeScreen';
 import FarmScreen from './screens/FarmScreen';
 import SearchScreen from './screens/SearchScreen';
 import ListScreen from './screens/ListScreen';
+import TaskDetail from './screens/TaskDetail';
 
 const Drawer = createDrawerNavigator();
 
@@ -22,6 +23,7 @@ function AppNavigator() {
             <Drawer.Screen name="Farm" component={FarmScreen} />
             <Drawer.Screen name="Search" component={SearchScreen} />
             <Drawer.Screen name="List" component={ListScreen} />
+            <Drawer.Screen name="Task" component={TaskDetail} />
         </Drawer.Navigator>
     );
 }
