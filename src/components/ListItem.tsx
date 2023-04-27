@@ -8,6 +8,7 @@ import Colors from '../constants/Colors';
 import Styles from '../common/Styles';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import AddTaskList from './AddTaskList';
 
 const colorAr = [
     '#637aff',
@@ -34,7 +35,7 @@ const ListItem = ({ item, index, animation, bgColor }) => {
                     <View style={[styles.image, { backgroundColor: bgColor }]} />
                 </TouchableOpacity>
                 <View style={styles.detailsContainer}>
-                    <Text style={styles.name}>{item.name}</Text>
+                    <Text style={styles.name}>{item.title}</Text>
                 </View>
             </View>
         </Animatable.View>
@@ -60,11 +61,11 @@ const ListItems = ({ navigation }) => {
     }, [bgColorRef]);
 
     const renderItem = useCallback(({ item, index }) => (
-        <ListItem 
-            item={item} 
-            index={index} 
-            animation={animation} 
-            bgColor={bgColor(index)} 
+        <ListItem
+            item={item}
+            index={index}
+            animation={animation}
+            bgColor={bgColor(index)}
         />
     ), [animation, bgColor, navigation])
 
@@ -76,6 +77,15 @@ const ListItems = ({ navigation }) => {
     }, [navigation])
 
     const data = Array.from({ length: itemCount }, (_, i) => i);
+
+
+    {/* TaskListModal*/ }
+    const [isModalVisible, setIsModalVisible] = useState(false);
+
+    const handleAddTaskListPress = () => {
+        setIsModalVisible(true);
+        setItemCount(prevCount => prevCount + 1);
+    };
 
     return (
         <View style={[Styles.container]}>
@@ -95,10 +105,11 @@ const ListItems = ({ navigation }) => {
                             justifyContent: 'center',
                             alignItems: 'center',
                         }}
-                        onPress={() => setItemCount(itemCount + 1)}
+                        onPress={handleAddTaskListPress}
                     >
                         <Feather name="plus" size={24} color="white" />
                     </TouchableOpacity>
+                    <AddTaskList visible={isModalVisible} setVisible={setIsModalVisible} />
                 </View>
 
                 <FlatList
@@ -112,7 +123,7 @@ const ListItems = ({ navigation }) => {
             </Animatable.View>
         </View>
     );
-}
+} 
 
 const styles = StyleSheet.create({
     name: {

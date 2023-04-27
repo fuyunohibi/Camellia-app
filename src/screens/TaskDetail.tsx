@@ -63,7 +63,7 @@ function TaskDetail() {
 
                 <Text style={styles.textTitle}>Note</Text>
                 <TextInput
-                    style={[styles.textInput, { fontWeight: title.length > 0 ? 'bold' : 'normal' }]}
+                    style={[styles.textInput, { fontWeight: note.length > 0 ? 'bold' : 'normal' }]}
                     value={note}
                     onChangeText={(text) => setNote(text)}
                 />
